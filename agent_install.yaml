@@ -1,0 +1,22 @@
+---
+- name: Installing SignalScience Agent MSI
+  hosts: win
+
+  tasks:
+    - name: Create folder for Agent.conf
+      win_command: cmd.exe /c mkdir C:\Program Files\Signal Sciences\Agent\
+    
+    - name: Copy the agent.conf from git
+      win_get_url:
+        url: https://github.com/mediwareinc/PATH/OF/FILE
+        dest: C:\Program Files\Signal Sciences\Agent\agent.conf
+
+    - name: Download the SignalScience Agent MSI
+      win_get_url:
+        url: https://dl.signalsciences.net/sigsci-agent/sigsci-agent_latest.msi
+        dest: C:\Program Files\Signal Sciences\Agent\sigsci-agent_latest.msi
+
+    - name: Install MSI
+      win_package:
+        path: C:\Program Files\Signal Sciences\Agent\
+        state: present
