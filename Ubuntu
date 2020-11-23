@@ -1,0 +1,42 @@
+---
+# Ansible Playbook for SigSci Install
+- hosts: all
+
+  tasks:
+  - name: "Add SigSci source list and gpg key on Ubuntu"
+    script: sigsci_install_ubuntu.sh
+    when: ansible_distribution == "Ubuntu"
+
+  - name: "Update apt"
+    shell: apt-get update --allow-unauthenticated
+
+  - name: "Install nginx"
+    apt: name=nginx state=latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: "Install SigSci agent"
+    shell: apt-get install -y --allow-unauthenticated sigsci-agent
+
+  - name: "Create /etc/sigsci directory"
+    file: path=/etc/sigsci state=directory
+    when: ansible_distribution == "Ubuntu"
+
+  - copy: src=agent.conf dest=/etc/sigsci/agent.conf
+    when: ansible_distribution == "Ubuntu"
+
+  - name: "Start sigsci agent"
+    service:
+      name: sigsci-agent
+      state: restarted
+
+  - name: "apt-get install sigsci-module-nginx"
+    shell: apt-get install -y --allow-unauthenticated sigsci-module-nginx
+
+  - name: "Enable SigSci nginx module"
+    nginx_module: name=signalsciences state=present
+    when: ansible_distribution == "Ubuntu"
+
+  - name: "Restart nginx"
+    service:
+      name: nginx
+      state: restarted
