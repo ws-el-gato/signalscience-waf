@@ -77,14 +77,14 @@
 # "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Modules
 #
     - name: To confirm that the module DLL has been registered with IIS
-      win_command: "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Configs
+      win_command: "C:\Program Files\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Configs
 
 # To confirm that the module configuration has been registered, run the following from a terminal running as Administrator to output the current configuration.
 #
 # "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Configs
 
     - name: To confirm that the module configuration has been registered
-      win_command: "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Info
+      win_command: "C:\Program Files\Signal Sciences\IIS Module\SigsciCtl.exe" Info
 
 
 
