@@ -50,7 +50,7 @@
         path: 'C:\Program Files\Signal Sciences\IIS Module'
         state: present
 
-
+ß
 # To confirm that the module DLL has been registered with IIS, run the following from a terminal running as Administrator to verify the SignalSciences module is listed:
 #
 # "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Modules
