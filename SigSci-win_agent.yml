@@ -21,12 +21,12 @@
  
   tasks:
     - name: Create folder for Agent.conf
-      win_command: cmd.exe /c mkdir C:\Program Files\Signal Sciences\Agent
+      win_command: cmd.exe /c mkdir C:\\Program Files\\Signal Sciences\\Agent
       state: present 
 
-    - name: Create folder for IIS module
-      win_command: cmd.exe /c mkdir C:\Program Files\Signal Sciences\IIS Module
-      state: present
+#    - name: Create folder for IIS module
+#      win_command: cmd.exe /c mkdir C:\\Program Files\\Signal Sciences\\IIS Module
+#      state: present
       
     - name: Download the sigsci-agent # Url to the agent page: https://dl.signalsciences.net/?prefix=sigsci-agent/
       win_get_url:
@@ -41,13 +41,27 @@
     - name: Copy the agent.conf from git
       win_copy:
         src: agent.conf
-        dest: C:\Program Files\Signal Sciences\Agent\
+        dest: C:\\Program Files\\Signal Sciences\\Agent
+        state: present
+
+    - name: Copy the agent.conf from git
+      win_copy:
+        src: sigsci-agent_latest.msi
+        dest: C:\\Program Files\\Signal Sciences\\Agent\
+        state: present
+
+    - name: Copy the agent.conf from git
+      win_copy:
+        src: sigsci-module-iis_latest.msi
+        dest: C:\\Program Files\\Signal Sciences\\IIS Module
         state: present
     
     - name: Install MSI
       win_msi: 
         path: 'C:\Program Files\Signal Sciences\IIS Module'
         state: present
+
+    
 #   
 # Alternatively, for unattended installation, use the following command. This command will not display any output, but will install into %PROGRAMFILES%\Signal Sciences\IIS Module by default. 
 # It will also register the Signal Sciences module and configuration with IIS.
