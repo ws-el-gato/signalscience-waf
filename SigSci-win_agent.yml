@@ -21,7 +21,7 @@
  
   tasks:
     - name: Create folder for Agent.conf
-      win_command: cmd.exe /c mkdir C:\\Program Files\\Signal Sciences\\Agent
+      win_command: cmd.exe /c mkdir C:\Program Files\Signal Sciences\Agent
       state: present 
 
 #    - name: Create folder for IIS module
@@ -31,34 +31,34 @@
     - name: Download the sigsci-agent # Url to the agent page: https://dl.signalsciences.net/?prefix=sigsci-agent/
       win_get_url:
         url: 'https://dl.signalsciences.net/sigsci-agent/sigsci-agent_latest.msi'
-        dest: 'C:\Program Files\Signal Sciences\Agent'
+        dest: C:\Program Files\Signal Sciences\Agent
 
     - name: Download the IIS module # Url to the IIS module page: https://dl.signalsciences.net/?prefix=sigsci-module-iis/
       win_get_url:
         url: 'https://dl.signalsciences.net/sigsci-module-iis/sigsci-module-iis_latest.msi'
-        dest: 'C:\Program Files\Signal Sciences\IIS Module'
+        dest: C:\Program Files\Signal Sciences\IIS Module
 # Copy the agent file over 
     - name: Copy the agent.conf from git
       win_copy:
         src: agent.conf
-        dest: C:\\Program Files\\Signal Sciences\\Agent
+        dest: C:\Program Files\Signal Sciences\Agent
         state: present
 
     - name: Copy the agent.conf from git
       win_copy:
         src: sigsci-agent_latest.msi
-        dest: C:\\Program Files\\Signal Sciences\\Agent\
+        dest: C:\Program Files\Signal Sciences\Agent\
         state: present
 
     - name: Copy the agent.conf from git
       win_copy:
         src: sigsci-module-iis_latest.msi
-        dest: C:\\Program Files\\Signal Sciences\\IIS Module
+        dest: C:\Program Files\Signal Sciences\IIS Module
         state: present
     
     - name: Install MSI
       win_msi: 
-        path: 'C:\Program Files\Signal Sciences\IIS Module'
+        path: C:\Program Files\Signal Sciences\IIS Module
         state: present
 
     
