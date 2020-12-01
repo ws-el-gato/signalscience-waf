@@ -1,0 +1,46 @@
+---
+- name: Installing SignalScience Agent MSI
+  hosts: all
+  gather_facts: True
+  
+  tasks:
+
+    - name: Create initial Signal Science Agent directory
+      win_file:
+         path: C:\Program Files\Signal Sciences\Agent\
+         state: directory
+    
+    - name: Create initial Signal Science IIS Module directory
+      win_file:
+         path: C:\Program Files\Signal Sciences\IIS Module
+         state: directory
+        
+    - name: Download the SignalScience Agent MSI
+      win_get_url:
+        url: https://dl.signalsciences.net/sigsci-agent/sigsci-agent_latest.msi
+        dest: C:\Program Files\Signal Sciences\Agent\
+        state: present
+
+    - name: Download the SignalScience IIS module MSI
+      win_get_url:
+        url: https://dl.signalsciences.net/sigsci-module-iis/sigsci-module-iis_latest.msi
+        dest: C:\Program Files\Signal Sciences\IIS Module
+        state: present
+               
+    - name: Copy the agent.conf from git
+      win_copy:
+        src: agent.conf
+        dest: C:\Program Files\Signal Sciences\Agent\
+        state: present
+      
+    - name: Install MSI
+      win_package:
+       path: C:\Program Files\Signal Sciences\Agent\sigsci-agent_latest.msi
+       state: present
+
+    - name: Run IIS module install
+      win_shell: msiexec /qn /i sigsci-module-iis_latest.msi
+
+    - name: Results of IIS
+      win_command: msiexec /qn /i sigsci-module-iis_latest.msi
+      register: sigsci_iis
