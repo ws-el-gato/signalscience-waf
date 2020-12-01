@@ -42,19 +42,16 @@
       win_copy:
         src: agent.conf
         dest: C:\Program Files\Signal Sciences\Agent
-        state: present
 
-    - name: Copy the agent.conf from git
+    - name: Copy the sigsci-agent_latest.msi from git
       win_copy:
         src: sigsci-agent_latest.msi
         dest: C:\Program Files\Signal Sciences\Agent\
-        state: present
 
-    - name: Copy the agent.conf from git
+    - name: Copy the sigsci-module-iis_latest.msi from git
       win_copy:
         src: sigsci-module-iis_latest.msi
         dest: C:\Program Files\Signal Sciences\IIS Module
-        state: present
     
     - name: Install MSI
       win_msi: 
