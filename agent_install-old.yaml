@@ -1,4 +1,21 @@
 ---
+#
+# The function of this book is to install Signal Science agent for the Web Application Firewall - WAF
+# Creator Jordan Awesome Robison 
+# Email: jordan.robison@wellsky.com
+#
+# Tunes while coding: https://www.youtube.com/watch?v=I8Z9FTRnj9I
+#
+# Quote: So hey you get off of my cloud
+# I'm the one they sent to control this crowd
+# Guaranteed to put smiles on faces
+# As of my control on a regular basis
+# 
+# Jira Ticket: HSRE-750
+# Confluence Page: Coming soon
+# AFT Repo: https://github.com/mediwareinc/ATF
+# Signal Science Doc page to install Windows Agent: https://docs.signalsciences.net/install-guides/agent-installation/windows-agent/
+#
 - name: Installing SignalScience Agent MSI
   hosts: all
   gather_facts: True
@@ -10,11 +27,6 @@
          path: C:\Program Files\Signal Sciences\Agent\
          state: directory
     
-    - name: Create initial Signal Science IIS Module directory
-      win_file:
-         path: C:\Program Files\Signal Sciences\IIS Module
-         state: directory
-        
     - name: Download the SignalScience Agent MSI
       win_get_url:
         url: https://dl.signalsciences.net/sigsci-agent/sigsci-agent_latest.msi
