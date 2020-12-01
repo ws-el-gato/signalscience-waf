@@ -21,8 +21,9 @@
  
   tasks:
     - name: Create folder for Agent.conf
-      win_command: cmd.exe /c mkdir C:\Program Files\Signal Sciences\Agent
-      state: present 
+      win_file:
+      path: C:\Program Files\Signal Sciences\Agent
+      state: directory 
 
 #    - name: Create folder for IIS module
 #      win_command: cmd.exe /c mkdir C:\\Program Files\\Signal Sciences\\IIS Module
