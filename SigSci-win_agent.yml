@@ -24,69 +24,32 @@
       win_file:
       path: C:\Program Files\Signal Sciences\Agent
       state: directory 
-
-#    - name: Create folder for IIS module
-#      win_command: cmd.exe /c mkdir C:\\Program Files\\Signal Sciences\\IIS Module
-#      state: present
       
     - name: Download the sigsci-agent # Url to the agent page: https://dl.signalsciences.net/?prefix=sigsci-agent/
       win_get_url:
         url: 'https://dl.signalsciences.net/sigsci-agent/sigsci-agent_latest.msi'
-        dest: C:\Program Files\Signal Sciences\Agent
+        dest: C:\devops\
 
     - name: Download the IIS module # Url to the IIS module page: https://dl.signalsciences.net/?prefix=sigsci-module-iis/
       win_get_url:
         url: 'https://dl.signalsciences.net/sigsci-module-iis/sigsci-module-iis_latest.msi'
-        dest: C:\Program Files\Signal Sciences\IIS Module
+        dest: C:\devops\
 # Copy the agent file over 
     - name: Copy the agent.conf from git
       win_copy:
         src: agent.conf
-        dest: C:\Program Files\Signal Sciences\Agent
+        dest: C:\Program Files\Signal Sciences\Agent    
 
-    - name: Copy the sigsci-agent_latest.msi from git
-      win_copy:
-        src: sigsci-agent_latest.msi
-        dest: C:\Program Files\Signal Sciences\Agent\
+# Running the Install on both the Agent and the IIS module
 
-    - name: Copy the sigsci-module-iis_latest.msi from git
-      win_copy:
-        src: sigsci-module-iis_latest.msi
-        dest: C:\Program Files\Signal Sciences\IIS Module
-    
-    - name: Install MSI
-      win_msi: 
-        path: C:\Program Files\Signal Sciences\IIS Module
-        state: present
-
-    
-#   
-# Alternatively, for unattended installation, use the following command. This command will not display any output, but will install into %PROGRAMFILES%\Signal Sciences\IIS Module by default. 
-# It will also register the Signal Sciences module and configuration with IIS.
-# msiexec /qn /i sigsci-module-iis_latest.msi
-#
-    - name: Run IIS module install
-      win_shell: msiexec /qn /i sigsci-module-iis_latest.msi
-
-    - name: Results of IIS
-      win_command: msiexec /qn /i sigsci-module-iis_latest.msi
-      register: sigsci_iis
-      
-# To confirm that the module DLL has been registered with IIS, run the following from a terminal running as Administrator to verify the SignalSciences module is listed:
-#
-# "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Modules
-#
-   # - name: To confirm that the module DLL has been registered with IIS
-   #  win_command: "C:\Program Files\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Configs
-
-# To confirm that the module configuration has been registered, run the following from a terminal running as Administrator to output the current configuration.
-#
-# "%PROGRAMFILES%\Signal Sciences\IIS Module\SigsciCtl.exe" Get-Configs
-
-   # - name: To confirm that the module configuration has been registered
-   #   win_command: "C:\Program Files\Signal Sciences\IIS Module\SigsciCtl.exe" Info
-
-
-
-
-
+    - name: Install Agent MSI
+      win_shell: C:\devops\sigsci-agent_latest.msi
+      args:
+         executable: cmd
+      register: msi_install_out
+       
+    - name: Install IIS Module
+      win_shell: C:\devops\sigsci-module-iis_latest.msi
+      args:
+         executable: cmd
+      register: iis_install_out

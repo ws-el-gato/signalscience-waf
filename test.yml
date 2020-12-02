@@ -1,0 +1,42 @@
+---
+- name: test module
+  hosts: all
+  gather_facts: True
+
+
+  tasks:
+     - name: Create  directory structure
+       win_file:
+         path: C:\devops
+         state: directory
+
+     - name: Download the SignalScience Agent MSI
+       win_get_url:
+        url: https://dl.signalsciences.net/sigsci-agent/sigsci-agent_latest.msi
+        dest: C:\devops\
+        state: present
+
+     - name: Download the SignalScience IIS module MSI
+       win_get_url:
+        url: https://dl.signalsciences.net/sigsci-module-iis/sigsci-module-iis_latest.msi
+        dest: C:\devops\
+        state: present
+
+     - name: Copy the agent.conf from git
+       win_copy:
+        src: agent.conf
+        dest: C:\Program Files\Signal Sciences\Agent\
+        state: present
+        
+     - name: install MSI
+       win_shell: C:\devops\sigsci-agent_latest.msi
+       args:
+         executable: cmd
+       register: msi_install_out
+       
+     - name: install iis
+       win_shell: C:\devops\sigsci-module-iis_latest.msi
+       args:
+         executable: cmd
+       register: iis_install_out
+     
