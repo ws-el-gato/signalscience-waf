@@ -3,6 +3,9 @@
 # The function of this book is to install Signal Science agent for the Web Application Firewall - WAF
 # Creator Jordan Awesome Robison 
 # Email: jordan.robison@wellsky.com
+# Jira Ticket: HSRE-750
+# Confluence Page: https://confluence.wellsky.com/display/~jordan.robison/Signal+Science+-+Web+Application+Firewall+Agent+install
+# Signal Science Doc page to install Windows Agent: https://docs.signalsciences.net/install-guides/agent-installation/windows-agent/
 #
 # Tunes while coding: https://www.youtube.com/watch?v=I8Z9FTRnj9I
 #
@@ -10,13 +13,8 @@
 # I'm the one they sent to control this crowd
 # Guaranteed to put smiles on faces
 # As of my control on a regular basis
-# 
-# Jira Ticket: HSRE-750
-# Confluence Page: Coming soon
-# AFT Repo: https://github.com/mediwareinc/ATF
-# Signal Science Doc page to install Windows Agent: https://docs.signalsciences.net/install-guides/agent-installation/windows-agent/
-#
-- name: Install Apache from an MSI 
+
+- name: Install Signal Science WAF Agent and IIS Module from an MSI 
   hosts: all 
  
   tasks:
