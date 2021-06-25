@@ -1,0 +1,26 @@
+---
+- name: Update the Signal Science WAF Agent and IIS Module from an MSI
+  hosts: all
+  gather_facts: True
+
+- name: Restart sigsci-agent
+  ansible.windows.win_service:
+    name: sigsci-agent
+    state: restarted
+
+- name: Status sigsci-agent
+  ansible.windows.win_service:
+    name: sigsci-agent
+    state: status
+
+# From the CLI
+# Open up a dos prompt
+# run net stop sigsci-agent
+# run net start sigsci-agent 
+
+- name: Prints two lines of messages, but only if there is an environment value set
+  ansible.builtin.debug:
+    msg:
+    - " Thanks for updating me! "
+    - " I feel harder,better,faster "
+    - "https://www.youtube.com/watch?v=gAjR4_CbPpQ"
